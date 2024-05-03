@@ -27,14 +27,29 @@ jobs:
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 # v2.0.2
 
+      - name: Update gcovr
+        run: pip install --upgrade gcovr
+
       - name: Run build-wrapper
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=MinSizeRel
+          cmake -B build -DCMAKE_BUILD_TYPE=Coverage
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build
+
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Generate coverage
+        run: gcovr -f src --sonarqube coverage-sonarqube.xml --lcov coverage-lcov.xml --gcov-executable 'llvm-cov-17 gcov'
 
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" --define sonar.coverageReportPaths=coverage-sonarqube.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.3.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage-lcov.xml

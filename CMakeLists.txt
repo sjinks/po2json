@@ -48,7 +48,7 @@ if(ENABLE_TESTING)
                 COMMAND ctest -C Coverage -T test --output-on-failure
                 COMMAND rm -rf "${PROJECT_BINARY_DIR}/coverage"
                 COMMAND mkdir -p "${PROJECT_BINARY_DIR}/coverage"
-                COMMAND gcovr -f "${PROJECT_SOURCE_DIR}" --html-details -o "${PROJECT_BINARY_DIR}/coverage/index.html" --exclude-noncode-lines --exclude-throw-branches --exclude-unreachable-branches --decisions --gcov-executable="${GCOV_TOOL}"
+                COMMAND gcovr -f "${PROJECT_SOURCE_DIR}/src" --html-details -o "${PROJECT_BINARY_DIR}/coverage/index.html" --exclude-noncode-lines --exclude-throw-branches --exclude-unreachable-branches --decisions --gcov-executable="${GCOV_TOOL}"
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
             )
         endif()
