@@ -1,0 +1,23 @@
+buildType:
+  default: debug
+  choices:
+    debug:
+      short: Debug
+      long: Disables optimizations and includes debug info.
+      buildType: Debug
+    release:
+      short: Release
+      long: Includes optimizations but no debug info.
+      buildType: Release
+    min-size-release:
+      short: MinSizeRel
+      long: Optimizes for size. No debug info.
+      buildType: MinSizeRel
+    release-with-debug:
+      short: RelWithDebInfo
+      long: Optimizes for speed but also includes debug info.
+      buildType: RelWithDebInfo
+    coverage:
+      short: Coverage
+      long: Builds with coverage.
+      buildType: Coverage
