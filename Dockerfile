@@ -15,7 +15,7 @@ WORKDIR /app
 RUN \
     set -x && \
     export ARCHITECTURE=$(xx-info march) && \
-    if [ "$(xx-info alpine-arch)" = "ppc64le" ]; then export XX_CC_PREFER_LINKER=ld; fi && \
+    if [ "${ARCHITECTURE}" = "ppc64le" ]; then export XX_CC_PREFER_LINKER=ld; fi && \
     export SYSROOT=$(xx-info sysroot) && \
     export HOSTSPEC=$(xx-info triple) && \
     xx-clang --setup-target-triple && \
@@ -41,6 +41,7 @@ WORKDIR /app
 RUN \
     set -x && \
     export ARCHITECTURE=$(xx-info march) && \
+    if [ "${ARCHITECTURE}" = "ppc64le" ]; then export XX_CC_PREFER_LINKER=ld; fi && \
     export SYSROOT=$(xx-info sysroot) && \
     export HOSTSPEC=$(xx-info triple) && \
     xx-clang --setup-target-triple && \
