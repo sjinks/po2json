@@ -7,7 +7,7 @@ runs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt-get install -y ca-certificates libgettextpo-dev libgtest-dev
+        sudo apt-get install -y ca-certificates libgettextpo-dev libgtest-dev gcovr
 
     - name: Install newer Clang
       shell: bash
