@@ -36,4 +36,4 @@ target_sources(
 
 target_include_directories(po2json PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(po2json gettextpo)
+target_link_libraries(po2json gettextpo ${EXTRA_LIBS})
