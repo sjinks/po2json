@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: Build
+    name: Build and Test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,5 +31,4 @@ jobs:
         run: cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build
 
       - name: Test
-        run: ctest -C Debug -T test --output-on-failure
-        working-directory: build
+        run: ctest --test-dir build --output-on-failure
