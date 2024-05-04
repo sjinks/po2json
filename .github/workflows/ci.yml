@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
+      attestations: write
     env:
       CXX: clang++-17
     steps:
@@ -32,3 +34,15 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build --output-on-failure
+
+      - name: Attest
+        uses: actions/attest-build-provenance@897ed5eab6ed058a474202017ada7f40bfa52940 # v1.0.0
+        id: attest
+        with:
+          subject-path: '${{ github.workspace }}/build/src/po2json'
+
+      - name: Print Attestation
+        run: |
+          echo "${{ steps.attest.outputs.bundle-path }}"
+          cat "${{ steps.attest.outputs.bundle-path }}"
+          jq . "${{ steps.attest.outputs.bundle-path }}"
