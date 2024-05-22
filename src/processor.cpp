@@ -1,5 +1,6 @@
 #include "processor.h"
 #include <format>
+#include <ostream>
 #include "conv.h"
 #include "gettext.h"
 #include "json.h"
