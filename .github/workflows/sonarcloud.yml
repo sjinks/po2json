@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: Build and analyze
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
       CXX: clang++-17
@@ -23,12 +23,12 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
-  
+
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@e4882e1621ad2fb48dddfa48287411bed34789b1 # v2.0.2
 
-      - name: Update gcovr
-        run: pip install --upgrade gcovr
+      - name: Install gcovr
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends gcovr
 
       - name: Run build-wrapper
         run: |
