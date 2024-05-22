@@ -15,7 +15,7 @@ permissions:
 jobs:
   scan-build:
     name: Run Clang Analyzer
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       security-events: write
