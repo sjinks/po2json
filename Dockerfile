@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} tonistiigi/xx:latest@sha256:0cd3f05c72d6c9b038eb135f91376ee1169ef3a330d34e418e65e2a5c2e9c0d4 AS xx
+FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:eeab95c2f1f0e2e25e08ebbd8402c841dde517b6a4281d0ce262fc3d89587142 AS xx
 
 FROM --platform=${BUILDPLATFORM} alpine:3.20.0@sha256:77726ef6b57ddf65bb551896826ec38bc3e53f75cdde31354fbffb4f25238ebd AS build-alpine
 ARG TARGETPLATFORM
@@ -23,7 +23,7 @@ RUN \
     cmake --build build -j 2 && \
     ${HOSTSPEC}-strip build/src/po2json
 
-FROM --platform=${BUILDPLATFORM} ubuntu:mantic-20240427@sha256:565d62d2283a7cc4b3d759d9a97a5bfcebeb341166f9076a4df504f8f106cd54 AS build-ubuntu
+FROM --platform=${BUILDPLATFORM} ubuntu:24.04@sha256:3f85b7caad41a95462cf5b787d8a04604c8262cdcdf9a472b8c52ef83375fe15 AS build-ubuntu
 ARG TARGETPLATFORM
 COPY --from=xx / /
 
