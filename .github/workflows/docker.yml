@@ -76,7 +76,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Attest
-        uses: actions/attest-build-provenance@3119152b59607c0d91a135e8d80c0d339f241a12 # v1.3.0
+        uses: actions/attest-build-provenance@534b352d658f90498fd148d231fdbf88f3886a3a # v1.3.1
         with:
           subject-name: ghcr.io/${{ github.repository }}
           subject-digest: ${{ steps.push.outputs.digest }}
