@@ -20,8 +20,8 @@ jobs:
       contents: read
       security-events: write
     env:
-      CXX: clang++-17
-      CCC_CXX: clang++-17
+      CXX: clang++-18
+      CCC_CXX: clang++-18
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
       SCANBUILD_DIR: /tmp/scanbuild
     steps:
