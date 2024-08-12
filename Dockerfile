@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:838660fc0ee1afbc837e4dd32b2a8ccd116072f67ab31a1ca1b33355b879d758 AS xx
+FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:d9fd8afedf9cc8b5e07321d956e081a0f99832b9a8ac5ed5137c4f6212d8cf8a AS xx
 
 FROM --platform=${BUILDPLATFORM} alpine:3.20.2@sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5 AS build-alpine
 ARG TARGETPLATFORM
