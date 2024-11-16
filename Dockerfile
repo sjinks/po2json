@@ -23,7 +23,7 @@ RUN \
     cmake --build build -j 2 && \
     ${HOSTSPEC}-strip build/src/po2json
 
-FROM --platform=${BUILDPLATFORM} ubuntu:24.04@sha256:99c35190e22d294cdace2783ac55effc69d32896daaa265f0bbedbcde4fbe3e5 AS build-ubuntu
+FROM --platform=${BUILDPLATFORM} ubuntu:24.04@sha256:278628f08d4979fb9af9ead44277dbc9c92c2465922310916ad0c46ec9999295 AS build-ubuntu
 ARG TARGETPLATFORM
 COPY --from=xx / /
 
