@@ -1,6 +1,6 @@
 FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:713ef0e918eb0d2d30b99e8168cf785974466868c794454ea419d3b150e4adb7 AS xx
 
-FROM --platform=${BUILDPLATFORM} alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 AS build-alpine
+FROM --platform=${BUILDPLATFORM} alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 AS build-alpine
 ARG TARGETPLATFORM
 COPY --from=xx / /
 
