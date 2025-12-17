@@ -11,29 +11,25 @@ on:
 jobs:
   build:
     name: Build and analyze
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     env:
-      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
       CXX: clang++-18
     steps:
       - name: Check out code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@44cc4d3d487fbc35e5c29b0a9d717be218d3a0e8 # v3.2.0
-
       - name: Install gcovr
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends gcovr
 
-      - name: Run build-wrapper
+      - name: Build
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=Coverage
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build
+          cmake -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Coverage
+          cmake --build build -j $(nproc)
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
@@ -42,14 +38,15 @@ jobs:
         run: gcovr -f src --exclude-noncode-lines --exclude-throw-branches --exclude-unreachable-branches --sonarqube coverage-sonarqube.xml --lcov coverage-lcov.xml --gcov-executable 'llvm-cov-17 gcov'
 
       - name: Run sonar-scanner
+        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 # v7.0.0
+        with:
+          args: >
+            --define sonar.cfamily.compile-commands=build/compile_commands.json
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" --define sonar.coverageReportPaths=coverage-sonarqube.xml
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage-lcov.xml
+          files: coverage-lcov.xml
