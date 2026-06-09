@@ -38,7 +38,7 @@ jobs:
         run: gcovr -f src --exclude-noncode-lines --exclude-throw-branches --exclude-unreachable-branches --sonarqube coverage-sonarqube.xml --lcov coverage-lcov.xml --gcov-executable 'llvm-cov-17 gcov'
 
       - name: Run sonar-scanner
-        uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432 # v8
+        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8
         with:
           args: >
             --define sonar.cfamily.compile-commands=build/compile_commands.json
